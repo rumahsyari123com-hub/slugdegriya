@@ -8,6 +8,7 @@ const DB_1 = __importDefault(require("../services/DB"));
 const crypto_1 = require("crypto");
 const markdown_it_1 = __importDefault(require("markdown-it"));
 const highlight_js_1 = __importDefault(require("highlight.js"));
+const markdown_it_anchor_1 = __importDefault(require("markdown-it-anchor"));
 const md = new markdown_it_1.default({
     html: false,
     linkify: true,
@@ -21,6 +22,16 @@ const md = new markdown_it_1.default({
             catch (__) { }
         }
         return '';
+    }
+});
+md.use(markdown_it_anchor_1.default, {
+    permalink: false,
+    slugify: (s) => {
+        return s
+            .toLowerCase()
+            .trim()
+            .replace(/[\s\W-]+/g, '-')
+            .replace(/^-+|-+$/g, '');
     }
 });
 class PostController {

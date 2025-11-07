@@ -4,6 +4,7 @@ import DB from "../services/DB";
 import { randomUUID } from "crypto";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
+import anchor from "markdown-it-anchor";
 
 // Configure markdown-it with built-in features
 const md = new MarkdownIt({
@@ -18,6 +19,19 @@ const md = new MarkdownIt({
             } catch (__) { }
         }
         return ''; // use external default escaping
+    }
+});
+
+// Add anchor plugin to generate IDs for headings
+md.use(anchor, {
+    permalink: false, // Don't add permalink symbols
+    slugify: (s: string) => {
+        // Convert heading text to URL-friendly slug
+        return s
+            .toLowerCase()
+            .trim()
+            .replace(/[\s\W-]+/g, '-') // Replace spaces and special chars with hyphens
+            .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
     }
 });
 
