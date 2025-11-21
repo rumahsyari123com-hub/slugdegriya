@@ -6,7 +6,7 @@ import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import anchor from "markdown-it-anchor";
 
-// Configure markdown-it with built-in features
+// Configure markdown-it with built-in featuress
 const md = new MarkdownIt({
     html: false, // Disable HTML tags for security
     linkify: true, // Auto-convert URLs to links
@@ -86,6 +86,19 @@ class PostController {
         try {
             const body = await request.json();
             const { content, slug } = body;
+            let { format } = body;
+
+            // Default format to markdown if not specified
+            if (!format) {
+                format = 'markdown';
+            }
+
+            // Validate format
+            if (format !== 'markdown' && format !== 'html') {
+                return response.status(400).json({
+                    error: "Invalid format. Must be 'markdown' or 'html'"
+                });
+            }
 
             // Validate required fields
             if (!content || !slug) {
@@ -110,9 +123,21 @@ class PostController {
                 });
             }
 
-            // Extract title from markdown (first # heading)
-            const titleMatch = content.match(/^#\s+(.+)$/m);
-            const title = titleMatch ? titleMatch[1].trim() : slug;
+            // Extract title from content
+            let title = slug;
+            if (format === 'markdown') {
+                const titleMatch = content.match(/^#\s+(.+)$/m);
+                if (titleMatch) {
+                    title = titleMatch[1].trim();
+                }
+            } else if (format === 'html') {
+                // Try to extract text from first h1 tag
+                const h1Match = content.match(/<h1[^>]*>(.*?)<\/h1>/i);
+                if (h1Match) {
+                    // Strip tags from title
+                    title = h1Match[1].replace(/<[^>]*>?/gm, '').trim();
+                }
+            }
 
             // Generate unique edit token
             const editToken = randomUUID();
@@ -125,6 +150,7 @@ class PostController {
                 slug,
                 content,
                 title,
+                format,
                 edit_token: editToken,
                 author_id: authorId,
                 view_count: 0,
@@ -200,6 +226,10 @@ class PostController {
                     last_viewed_at: DB.fn.now()
                 });
 
+            if (post.format === 'html') { 
+                return response.type("html").send(post.content);
+            }
+
             // Load author info if exists
             let author = null;
             if (post.author_id) {
@@ -209,8 +239,8 @@ class PostController {
                     .first();
             }
 
-            // Render markdown to HTML
-            const htmlContent = md.render(post.content);
+            // Render content based on format
+            let htmlContent  = md.render(post.content); 
 
 
             // Extract description from content (first paragraph)
@@ -292,6 +322,7 @@ class PostController {
                     slug: post.slug,
                     title: post.title,
                     content: post.content,
+                    format: post.format || 'markdown',
                     view_count: post.view_count,
                     created_at: post.created_at,
                     updated_at: post.updated_at
@@ -316,7 +347,11 @@ class PostController {
             const { slug, token } = request.params;
             const body = await request.json();
             const { content } = body;
+            let { format } = body;
 
+            // Default to markdown if not sent (backward compatibility) but ideally we want it from the request
+            // If format is not provided, we might want to keep existing format, but let's assume user can change it.
+            
             if (!content) {
                 return response.status(400).json({
                     error: "Content is required"
@@ -335,9 +370,24 @@ class PostController {
                 });
             }
 
-            // Extract new title from markdown
-            const titleMatch = content.match(/^#\s+(.+)$/m);
-            const title = titleMatch ? titleMatch[1].trim() : post.title;
+            // If format not provided in update, keep existing
+            if (!format) {
+                format = post.format || 'markdown';
+            }
+
+            // Extract new title
+            let title = post.title;
+            if (format === 'markdown') {
+                const titleMatch = content.match(/^#\s+(.+)$/m);
+                if (titleMatch) {
+                    title = titleMatch[1].trim();
+                }
+            } else if (format === 'html') {
+                const h1Match = content.match(/<h1[^>]*>(.*?)<\/h1>/i);
+                if (h1Match) {
+                    title = h1Match[1].replace(/<[^>]*>?/gm, '').trim();
+                }
+            }
 
             // Update post
             await DB.table("posts")
@@ -345,6 +395,7 @@ class PostController {
                 .update({
                     content,
                     title,
+                    format,
                     updated_at: DB.fn.now()
                 });
 
@@ -370,7 +421,7 @@ class PostController {
     public async preview(request: Request, response: Response) {
         try {
             const body = await request.json();
-            const { content } = body;
+            const { content, format } = body;
 
             if (!content) {
                 return response.status(400).json({
@@ -378,8 +429,13 @@ class PostController {
                 });
             }
 
-            // Render markdown to HTML
-            const htmlContent = md.render(content);
+            // Render content based on format
+            let htmlContent;
+            if (format === 'html') {
+                htmlContent = content;
+            } else {
+                htmlContent = md.render(content);
+            }
 
             return response.json({
                 success: true,

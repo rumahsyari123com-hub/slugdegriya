@@ -14,7 +14,8 @@
     // Form state
     let form = {
         content: post.content,
-        slug: post.slug
+        slug: post.slug,
+        format: post.format || 'markdown'
     };
 
     // UI state
@@ -26,7 +27,7 @@
     let hasUnsavedChanges = false;
 
     // Track changes
-    $: if (form.content !== post.content) {
+    $: if (form.content !== post.content || form.format !== post.format) {
         hasUnsavedChanges = true;
     }
 
@@ -52,7 +53,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ content: form.content })
+                body: JSON.stringify({ content: form.content, format: form.format })
             });
 
             if (response.ok) {
@@ -272,18 +273,22 @@
         {#if activeTab === 'edit'}
         <!-- Editor Tab -->
         <div class="p-3 sm:p-6">
+            <div class="mb-4 flex space-x-4">
+                <label class="flex items-center space-x-2 cursor-pointer">
+                    <input type="radio" bind:group={form.format} value="markdown" class="text-primary-600 focus:ring-primary-500">
+                    <span class="text-sm text-slate-700">Markdown</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                    <input type="radio" bind:group={form.format} value="html" class="text-primary-600 focus:ring-primary-500">
+                    <span class="text-sm text-slate-700">HTML</span>
+                </label>
+            </div>
+
             <textarea 
                 bind:value={form.content}
                 rows="20"
                 class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 font-mono text-xs sm:text-sm resize-none"
-                placeholder="# Your Title
-
-Write your markdown content here...
-
-## Features
-- Easy to use
-- Beautiful rendering
-- Syntax highlighting"
+                placeholder={form.format === 'markdown' ? "# Your Title\n\nWrite your markdown content here...\n\n## Features\n- Easy to use\n- Beautiful rendering\n- Syntax highlighting" : "<h1>Your Title</h1>\n\n<p>Write your HTML content here...</p>\n\n<h2>Features</h2>\n<ul>\n  <li>Easy to use</li>\n  <li>Beautiful rendering</li>\n  <li>Syntax highlighting</li>\n</ul>"}
             ></textarea>
             
             <div class="mt-3 sm:mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs sm:text-sm text-slate-600">
@@ -395,7 +400,7 @@ Write your markdown content here...
                     </div>
                 </div>
 
-                <!-- Markdown Help -->
+                <!-- Markdown/HTML Help -->
                 <div class="bg-primary-50 border border-primary-200 rounded-lg p-4 sm:p-6 md:col-span-2">
                     <h3 class="font-bold text-primary-900 mb-3 flex items-center space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -403,9 +408,10 @@ Write your markdown content here...
                             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                             <path d="M12 17h.01"></path>
                         </svg>
-                        <span>Markdown Syntax</span>
+                        <span>{post.format === 'markdown' ? 'Markdown Syntax' : 'HTML Syntax'}</span>
                     </h3>
                     <div class="grid grid-cols-2 gap-4 text-sm text-primary-800">
+                        {#if post.format === 'markdown'}
                         <div>
                             <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded"># Heading 1</code></p>
                             <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">## Heading 2</code></p>
@@ -416,6 +422,18 @@ Write your markdown content here...
                             <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">[link](url)</code></p>
                             <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">```code block```</code></p>
                         </div>
+                        {:else}
+                        <div>
+                            <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">&lt;h1&gt;Heading 1&lt;/h1&gt;</code></p>
+                            <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">&lt;p&gt;Paragraph&lt;/p&gt;</code></p>
+                            <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">&lt;strong&gt;bold&lt;/strong&gt;</code></p>
+                        </div>
+                        <div>
+                            <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">&lt;em&gt;italic&lt;/em&gt;</code></p>
+                            <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">&lt;a href="..."&gt;link&lt;/a&gt;</code></p>
+                            <p class="mb-2"><code class="bg-primary-100 px-2 py-1 rounded">&lt;img src="..."&gt;</code></p>
+                        </div>
+                        {/if}
                     </div>
                 </div>
 

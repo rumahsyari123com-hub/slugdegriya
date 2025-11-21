@@ -392,6 +392,7 @@
 - [x] Live markdown preview
 - [x] Syntax highlighting for code blocks (highlight.js)
 - [x] Markdown-it with plugins (anchor, typographer)
+- [x] HTML content publishing support
 - [ ] Dark mode toggle (in progress)
 - [ ] Export to PDF
 - [ ] Post analytics dashboard
@@ -527,3 +528,6 @@
 - ✅ Added conditional claim button based on status
 - ✅ Mobile-first responsive design across all pages
 - ✅ OptionalAuth middleware for hybrid pages
+- ✅ Added support for HTML content publishing
+
+## 🚀 Launch Checklist

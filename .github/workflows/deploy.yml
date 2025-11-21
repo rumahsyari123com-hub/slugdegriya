@@ -48,7 +48,7 @@ jobs:
           # Contoh untuk Node.js (sesuaikan dengan teknologi Anda)
           npm install 
   
-          pm2 reload klikaja
+          pm2 reload slugpost
            
           
           echo "✅ Deployment finished!"

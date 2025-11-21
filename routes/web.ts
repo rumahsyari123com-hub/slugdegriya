@@ -135,7 +135,7 @@ Route.get("/assets/:file", AssetController.distFolder);
  * These must come BEFORE the public assets catch-all
  * ------------------------------------------------
  * GET  /claim/:slug - Claim post (requires login)
- * GET  /:slug - View post
+ * GET  /:slug - View post (Renders Markdown or HTML based on post format)
  * GET  /:slug/edit/:token - Edit post form
  * POST /:slug/edit/:token - Update post
  */

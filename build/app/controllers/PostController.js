@@ -69,6 +69,15 @@ class PostController {
         try {
             const body = await request.json();
             const { content, slug } = body;
+            let { format } = body;
+            if (!format) {
+                format = 'markdown';
+            }
+            if (format !== 'markdown' && format !== 'html') {
+                return response.status(400).json({
+                    error: "Invalid format. Must be 'markdown' or 'html'"
+                });
+            }
             if (!content || !slug) {
                 return response.status(400).json({
                     error: "Content and slug are required"
@@ -86,14 +95,26 @@ class PostController {
                     error: "This slug is already taken. Please choose another one."
                 });
             }
-            const titleMatch = content.match(/^#\s+(.+)$/m);
-            const title = titleMatch ? titleMatch[1].trim() : slug;
+            let title = slug;
+            if (format === 'markdown') {
+                const titleMatch = content.match(/^#\s+(.+)$/m);
+                if (titleMatch) {
+                    title = titleMatch[1].trim();
+                }
+            }
+            else if (format === 'html') {
+                const h1Match = content.match(/<h1[^>]*>(.*?)<\/h1>/i);
+                if (h1Match) {
+                    title = h1Match[1].replace(/<[^>]*>?/gm, '').trim();
+                }
+            }
             const editToken = (0, crypto_1.randomUUID)();
             const authorId = request?.user?.id || null;
             const postId = await DB_1.default.table("posts").insert({
                 slug,
                 content,
                 title,
+                format,
                 edit_token: editToken,
                 author_id: authorId,
                 view_count: 0,
@@ -146,6 +167,9 @@ class PostController {
                 .update({
                 last_viewed_at: DB_1.default.fn.now()
             });
+            if (post.format === 'html') {
+                return response.type("html").send(post.content);
+            }
             let author = null;
             if (post.author_id) {
                 author = await DB_1.default.from("users")
@@ -153,7 +177,7 @@ class PostController {
                     .select("name", "email")
                     .first();
             }
-            const htmlContent = md.render(post.content);
+            let htmlContent = md.render(post.content);
             const descriptionMatch = post.content.match(/^(?!#)(.+)$/m);
             const description = descriptionMatch
                 ? descriptionMatch[1].trim().substring(0, 160)
@@ -211,6 +235,7 @@ class PostController {
                     slug: post.slug,
                     title: post.title,
                     content: post.content,
+                    format: post.format || 'markdown',
                     view_count: post.view_count,
                     created_at: post.created_at,
                     updated_at: post.updated_at
@@ -230,6 +255,7 @@ class PostController {
             const { slug, token } = request.params;
             const body = await request.json();
             const { content } = body;
+            let { format } = body;
             if (!content) {
                 return response.status(400).json({
                     error: "Content is required"
@@ -244,13 +270,28 @@ class PostController {
                     error: "Invalid edit link"
                 });
             }
-            const titleMatch = content.match(/^#\s+(.+)$/m);
-            const title = titleMatch ? titleMatch[1].trim() : post.title;
+            if (!format) {
+                format = post.format || 'markdown';
+            }
+            let title = post.title;
+            if (format === 'markdown') {
+                const titleMatch = content.match(/^#\s+(.+)$/m);
+                if (titleMatch) {
+                    title = titleMatch[1].trim();
+                }
+            }
+            else if (format === 'html') {
+                const h1Match = content.match(/<h1[^>]*>(.*?)<\/h1>/i);
+                if (h1Match) {
+                    title = h1Match[1].replace(/<[^>]*>?/gm, '').trim();
+                }
+            }
             await DB_1.default.table("posts")
                 .where("id", post.id)
                 .update({
                 content,
                 title,
+                format,
                 updated_at: DB_1.default.fn.now()
             });
             return response.json({
@@ -269,13 +310,19 @@ class PostController {
     async preview(request, response) {
         try {
             const body = await request.json();
-            const { content } = body;
+            const { content, format } = body;
             if (!content) {
                 return response.status(400).json({
                     error: "Content is required"
                 });
             }
-            const htmlContent = md.render(content);
+            let htmlContent;
+            if (format === 'html') {
+                htmlContent = content;
+            }
+            else {
+                htmlContent = md.render(content);
+            }
             return response.json({
                 success: true,
                 html: htmlContent
