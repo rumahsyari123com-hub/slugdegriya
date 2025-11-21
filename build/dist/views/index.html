@@ -7,7 +7,7 @@
     <meta name="description" content="Publish and share your markdown files instantly with beautiful web previews. No registration required.">
  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" crossorigin href="/assets/index-DKxm316C.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-CeyGDqvy.css">
 </head>
 <body class="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 min-h-screen">
     
@@ -36,10 +36,13 @@
             </div>
             <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold text-slate-900 mb-3 sm:mb-4 px-2">
                 Publish & Share<br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-400">Markdown</span> Instantly
+                <span class="relative inline-block">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-400" id="dynamic-text">Markdown</span>
+                    <span class="absolute -bottom-2 left-0 w-full h-1 bg-primary-200/50 rounded-full"></span>
+                </span> Instantly
             </h1>
             <p class="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto px-4">
-                Convert your markdown files into beautiful, shareable web pages with custom URLs. Start publishing in seconds.
+                Convert your markdown & HTML files into beautiful, shareable web pages with custom URLs. Start publishing in seconds.
             </p>
         </div>
 
@@ -220,6 +223,27 @@ Write your markdown content here...
     {{@include('partials/footer.html')/}}
 
     <script>
+        // Dynamic text animation
+        const dynamicText = document.getElementById('dynamic-text');
+        const texts = ['Markdown', 'HTML'];
+        let textIndex = 0;
+
+        setInterval(() => {
+            textIndex = (textIndex + 1) % texts.length;
+            
+            // Fade out
+            dynamicText.style.opacity = '0';
+            dynamicText.style.transform = 'translateY(10px)';
+            dynamicText.style.transition = 'all 0.5s ease';
+            
+            setTimeout(() => {
+                dynamicText.textContent = texts[textIndex];
+                // Fade in
+                dynamicText.style.opacity = '1';
+                dynamicText.style.transform = 'translateY(0)';
+            }, 500);
+        }, 3000);
+
         const fileInput = document.getElementById('file');
         const contentTextarea = document.getElementById('content');
         const slugInput = document.getElementById('slug');
