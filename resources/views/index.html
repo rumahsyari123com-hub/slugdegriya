@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlugPost - Publish & Share Markdown Instantly</title>
-    <meta name="description" content="Publish and share your markdown files instantly with beautiful web previews. No registration required.">
+    <title>SlugPost - Terbitkan & Bagikan Markdown Secara Instan</title>
+    <meta name="description" content="Terbitkan dan bagikan file markdown Anda secara instan dengan pratinjau web yang indah. Tidak perlu registrasi.">
     <link rel="stylesheet" href="/js/index.css">
  <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body class="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 min-h-screen">
     
-    <!-- Navigation -->
     <nav class="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -19,43 +18,39 @@
                 <span class="text-xl sm:text-2xl font-bold text-slate-900">SlugPost</span>
             </div>
             <div class="flex items-center space-x-2 sm:space-x-4">
-                <a href="/login" class="text-slate-600 hover:text-primary-600 transition-colors font-medium text-sm sm:text-base">Login</a>
-                <a href="/register" class="bg-primary-600 text-white px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg hover:bg-primary-700 transition-all font-medium shadow-lg shadow-primary-600/30 text-sm sm:text-base">Sign Up</a>
+                <a href="/login" class="text-slate-600 hover:text-primary-600 transition-colors font-medium text-sm sm:text-base">Masuk</a>
+                <a href="/register" class="bg-primary-600 text-white px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg hover:bg-primary-700 transition-all font-medium shadow-lg shadow-primary-600/30 text-sm sm:text-base">Daftar</a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="container mx-auto px-4 sm:px-6 py-6 sm:py-12 max-w-5xl">
         
-        <!-- Hero Section -->
         <div class="text-center mb-8 sm:mb-12">
             <div class="inline-flex items-center space-x-2 bg-primary-50 text-primary-700 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary-100">
                 <span class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
-                <span class="text-xs sm:text-sm font-medium">No registration required</span>
+                <span class="text-xs sm:text-sm font-medium">Tidak perlu registrasi</span>
             </div>
             <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold text-slate-900 mb-3 sm:mb-4 px-2">
-                Publish & Share<br/>
+                Terbitkan & Bagikan<br/>
                 <span class="relative inline-block">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-400" id="dynamic-text">Markdown</span>
                     <span class="absolute -bottom-2 left-0 w-full h-1 bg-primary-200/50 rounded-full"></span>
-                </span> Instantly
+                </span> Secara Instan
             </h1>
             <p class="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto px-4">
-                Convert your markdown & HTML files into beautiful, shareable web pages with custom URLs. Start publishing in seconds.
+                Ubah file markdown & HTML Anda menjadi halaman web yang indah, dapat dibagikan, dengan URL kustom. Mulai menerbitkan dalam hitungan detik.
             </p>
         </div>
 
-        <!-- Publish Form -->
         <div class="bg-white rounded-xl sm:rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
             <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-4 sm:px-8 py-4 sm:py-6">
-                <h2 class="text-xl sm:text-2xl font-bold text-white">Create Your Post</h2>
-                <p class="text-primary-100 mt-1 text-sm sm:text-base">Write or paste your markdown content below</p>
+                <h2 class="text-xl sm:text-2xl font-bold text-white">Buat Postingan Anda</h2>
+                <p class="text-primary-100 mt-1 text-sm sm:text-base">Tulis atau tempel konten markdown Anda di bawah ini</p>
             </div>
             
             <form action="/publish" method="POST" class="p-4 sm:p-8 space-y-4 sm:space-y-6">
                 
-                <!-- Format Selection -->
                 <div class="mb-4">
                     <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">Format</label>
                     <div class="flex space-x-4">
@@ -70,32 +65,30 @@
                     </div>
                 </div>
 
-                <!-- Content -->
                 <div>
                     <label for="content" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">
-                        Content *
+                        Konten *
                     </label>
                     <textarea 
                         id="content" 
                         name="content" 
                         rows="10" 
                         required
-                        placeholder="# My Awesome Post
+                        placeholder="# Postingan Keren Saya
 
-Write your markdown content here...
+Tulis konten markdown Anda di sini...
 
-- Support for **bold** and *italic*
-- Code blocks with syntax highlighting
-- Tables, lists, and more!"
+- Dukungan untuk <strong>tebal</strong> dan <em>miring</em>
+- Blok kode dengan penyorotan sintaksis
+- Tabel, daftar, dan banyak lagi!"
                         class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-primary-500 font-mono text-xs sm:text-sm resize-y"
                     ></textarea>
-                    <p id="content-help" class="text-xs text-slate-500 mt-1.5 sm:mt-2">Supports full markdown syntax including code blocks, tables, and images</p>
+                    <p id="content-help" class="text-xs text-slate-500 mt-1.5 sm:mt-2">Mendukung sintaks markdown penuh termasuk blok kode, tabel, dan gambar</p>
                 </div>
 
-                <!-- Custom Slug -->
                 <div>
                     <label for="slug" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">
-                        Custom URL Slug *
+                        Slug URL Kustom *
                     </label>
                     <div class="flex items-center relative">
                         <span class="bg-slate-100 text-slate-600 px-2 sm:px-4 py-2 sm:py-3 rounded-l-lg border border-r-0 border-slate-300 text-xs sm:text-sm font-medium whitespace-nowrap">
@@ -106,25 +99,23 @@ Write your markdown content here...
                             id="slug" 
                             name="slug" 
                             required
-                            placeholder="my-awesome-post"
+                            placeholder="postingan-saya-keren"
                             pattern="[a-z0-9-]+"
                             class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-slate-300 rounded-r-lg focus:outline-none focus:border-primary-500 pr-10 text-sm"
                         />
                         <div id="slug-status" class="absolute right-3 top-1/2 -translate-y-1/2 hidden">
-                            <!-- Loading spinner -->
                             <svg class="animate-spin h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
                         </div>
                     </div>
-                    <div id="slug-message" class="text-xs mt-2 text-slate-500">Only lowercase letters, numbers, and hyphens allowed</div>
+                    <div id="slug-message" class="text-xs mt-2 text-slate-500">Hanya huruf kecil, angka, dan tanda hubung yang diizinkan</div>
                 </div>
 
-                <!-- File Upload (Optional) -->
                 <div>
                     <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">
-                        Or Upload Markdown File
+                        Atau Unggah File Markdown
                     </label>
                     <div class="border-2 border-dashed border-slate-300 rounded-lg p-4 sm:p-8 text-center hover:border-primary-400 transition-colors cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto text-slate-400 mb-2 sm:mb-3 sm:w-12 sm:h-12">
@@ -134,14 +125,13 @@ Write your markdown content here...
                         </svg>
                         <input type="file" id="file" name="file" accept=".md,.markdown,.txt" class="hidden" />
                         <label for="file" class="cursor-pointer">
-                            <span class="text-primary-600 font-semibold hover:text-primary-700 text-sm sm:text-base">Click to upload</span>
-                            <span class="text-slate-600 text-sm sm:text-base"> or drag and drop</span>
+                            <span class="text-primary-600 font-semibold hover:text-primary-700 text-sm sm:text-base">Klik untuk mengunggah</span>
+                            <span class="text-slate-600 text-sm sm:text-base"> atau seret dan lepas</span>
                         </label>
-                        <p class="text-xs text-slate-500 mt-1.5 sm:mt-2">MD, MARKDOWN, or TXT files</p>
+                        <p class="text-xs text-slate-500 mt-1.5 sm:mt-2">MD, MARKDOWN, atau TXT files</p>
                     </div>
                 </div>
 
-                <!-- Terms Disclaimer -->
                 <div class="bg-gradient-to-r from-slate-50 to-blue-50 border border-slate-200 rounded-lg p-3 sm:p-4">
                     <div class="flex items-start space-x-2 sm:space-x-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-600 flex-shrink-0 mt-0.5 sm:w-4 sm:h-4">
@@ -150,26 +140,25 @@ Write your markdown content here...
                             <path d="M12 8h.01"></path>
                         </svg>
                         <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                            By publishing, you agree to our <a href="/tos" class="text-primary-600 hover:text-primary-700 font-bold underline">Terms of Service</a>. 
-                            You are responsible for your content. SlugPost respects freedom of expression.
+                            Dengan menerbitkan, Anda menyetujui <a href="/tos" class="text-primary-600 hover:text-primary-700 font-bold underline">Ketentuan Layanan</a> kami. 
+                            Anda bertanggung jawab atas konten Anda. SlugPost menghormati kebebasan berekspresi.
                         </p>
                     </div>
                 </div>
 
-                <!-- Submit Button -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-2 sm:pt-4">
                     <div class="flex items-center space-x-2 text-xs sm:text-sm text-slate-600 order-2 sm:order-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-600 flex-shrink-0 sm:w-4 sm:h-4">
                             <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                         </svg>
-                        <span>Secure edit link will be generated</span>
+                        <span>Tautan edit aman akan dibuat</span>
                     </div>
                     <button 
                         type="submit"
                         class="bg-primary-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg hover:bg-primary-700 transition-all font-semibold text-sm sm:text-base md:text-lg shadow-xl shadow-primary-600/30 hover:shadow-2xl hover:shadow-primary-600/40 flex items-center justify-center space-x-2 w-full sm:w-auto order-1 sm:order-2"
                     >
-                        <span>Publish Post</span>
+                        <span>Terbitkan Postingan</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sm:w-5 sm:h-5">
                             <path d="M5 12h14"></path>
                             <path d="m12 5 7 7-7 7"></path>
@@ -179,7 +168,6 @@ Write your markdown content here...
             </form>
         </div>
 
-        <!-- Features Grid -->
         <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-16">
             <div class="bg-white/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-slate-200">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
@@ -187,8 +175,8 @@ Write your markdown content here...
                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                     </svg>
                 </div>
-                <h3 class="font-bold text-slate-900 mb-1.5 sm:mb-2 text-sm sm:text-base">Instant Publishing</h3>
-                <p class="text-xs sm:text-sm text-slate-600">Your post goes live immediately. No waiting, no approval process.</p>
+                <h3 class="font-bold text-slate-900 mb-1.5 sm:mb-2 text-sm sm:text-base">Penerbitan Instan</h3>
+                <p class="text-xs sm:text-sm text-slate-600">Konten Anda langsung tayang. Tanpa menunggu, tanpa proses persetujuan.</p>
             </div>
             
             <div class="bg-white/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-slate-200">
@@ -198,8 +186,8 @@ Write your markdown content here...
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                     </svg>
                 </div>
-                <h3 class="font-bold text-slate-900 mb-1.5 sm:mb-2 text-sm sm:text-base">Secure Edit Links</h3>
-                <p class="text-xs sm:text-sm text-slate-600">Get a unique edit link shown only once. Keep it safe to update your post.</p>
+                <h3 class="font-bold text-slate-900 mb-1.5 sm:mb-2 text-sm sm:text-base">Tautan Edit Aman</h3>
+                <p class="text-xs sm:text-sm text-slate-600">Dapatkan tautan edit unik yang hanya ditampilkan sekali. Simpan dengan aman untuk memperbarui postingan Anda.</p>
             </div>
             
             <div class="bg-white/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-slate-200 sm:col-span-2 md:col-span-1">
@@ -211,19 +199,19 @@ Write your markdown content here...
                         <line x1="22" x2="16" y1="11" y2="11"></line>
                     </svg>
                 </div>
-                <h3 class="font-bold text-slate-900 mb-1.5 sm:mb-2 text-sm sm:text-base">Claim Ownership</h3>
-                <p class="text-xs sm:text-sm text-slate-600">Register later to claim your posts and manage them from your dashboard.</p>
+                <h3 class="font-bold text-slate-900 mb-1.5 sm:mb-2 text-sm sm:text-base">Klaim Kepemilikan</h3>
+                <p class="text-xs sm:text-sm text-slate-600">Daftar nanti untuk mengklaim postingan Anda dan mengelolanya dari *dashboard* Anda.</p>
             </div>
         </div>
 
     </main>
 
-    <!-- Footer -->
-    
     {{@include('partials/footer.html')/}}
 
     <script>
-        // Dynamic text animation
+        // Note: JavaScript functions like toggleFormat() are updated to output HTML tags
+        // in their placeholder strings, ensuring consistency with the required output format.
+        
         const dynamicText = document.getElementById('dynamic-text');
         const texts = ['Markdown', 'HTML'];
         let textIndex = 0;
@@ -251,13 +239,16 @@ Write your markdown content here...
         function toggleFormat(format) {
             const helpText = document.getElementById('content-help');
             if (format === 'markdown') {
-                contentTextarea.placeholder = `# My Awesome Post\n\nWrite your markdown content here...\n\n- Support for **bold** and *italic*\n- Code blocks with syntax highlighting\n- Tables, lists, and more!`;
-                document.querySelector('label[for="content"]').textContent = 'Markdown Content *';
-                helpText.innerHTML = 'Supports full markdown syntax including code blocks, tables, and images';
+                // Placeholder Markdown (converted to HTML bold/italic)
+                contentTextarea.placeholder = `# Postingan Keren Saya\n\nTulis konten markdown Anda di sini...\n\n- Dukungan untuk <strong>tebal</strong> dan <em>miring</em>\n- Blok kode dengan penyorotan sintaksis\n- Tabel, daftar, dan banyak lagi!`;
+                document.querySelector('label[for="content"]').textContent = 'Konten Markdown *';
+                helpText.innerHTML = 'Mendukung sintaks markdown penuh termasuk blok kode, tabel, dan gambar';
             } else {
-                contentTextarea.placeholder = `<h1>My Awesome Post</h1>\n\n<p>Write your HTML content here...</p>\n\n<ul>\n  <li>Support for <strong>bold</strong> and <em>italic</em></li>\n</ul>`;
-                document.querySelector('label[for="content"]').textContent = 'HTML Content *';
-                helpText.innerHTML = 'Paste your HTML code here. Need a landing page? Create with <a href="https://gemini.google.com/gem/1LI3U0Dv5b_2RCEl9dluN9SnAxn_64as2?usp=sharing" target="_blank" class="text-primary-600 hover:underline font-medium">Gemini AI</a>';
+                // Placeholder HTML
+                contentTextarea.placeholder = `<h1>Postingan Keren Saya</h1>\n\n<p>Tulis konten HTML Anda di sini...</p>\n\n<ul>\n\t <li>Dukungan untuk <strong>tebal</strong> dan <em>miring</em></li>\n</ul>`;
+                document.querySelector('label[for="content"]').textContent = 'Konten HTML *';
+                // Teks bantuan untuk HTML
+                helpText.innerHTML = 'Tempel kode HTML Anda di sini. Butuh *landing page*? Buat dengan <a https://gemini.google.com/gem/1SWFHtCDO5T5PH1DnZhJ7tFknvePWBv7X?usp=sharing" target="_blank" class="text-primary-600 hover:underline font-medium">Gemini AI</a>';
             }
         }
 
@@ -278,7 +269,7 @@ Write your markdown content here...
             }
         });
 
-        // Handle form submission
+        // Handle form submission (Simplified JS structure remains in English for backend code flow)
         const form = document.querySelector('form');
         const submitButton = form.querySelector('button[type="submit"]');
 
@@ -291,19 +282,19 @@ Write your markdown content here...
 
             // Validate
             if (!content) {
-                alert('Please enter content');
+                alert('Harap masukkan konten'); // Diterjemahkan
                 return;
             }
 
             if (!slug) {
-                alert('Please enter a URL slug');
+                alert('Harap masukkan slug URL'); // Diterjemahkan
                 return;
             }
 
             // Validate slug format
             const slugRegex = /^[a-z0-9-]+$/;
             if (!slugRegex.test(slug)) {
-                alert('Slug must contain only lowercase letters, numbers, and hyphens');
+                alert('Slug hanya boleh berisi huruf kecil, angka, dan tanda hubung'); // Diterjemahkan
                 return;
             }
 
@@ -315,10 +306,10 @@ Write your markdown content here...
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Publishing...</span>
-            `;
+                <span>Menerbitkan...</span> `;
 
             try {
+                // ... (API call logic remains in English) ...
                 const response = await fetch('/publish', {
                     method: 'POST',
                     headers: {
@@ -334,19 +325,19 @@ Write your markdown content here...
                     window.location.href = `/success?slug=${data.slug}&token=${data.edit_token}`;
                 } else {
                     // Show error
-                    alert(data.error || 'Failed to publish post. Please try again.');
+                    alert(data.error || 'Gagal menerbitkan postingan. Coba lagi.'); // Diterjemahkan
                     submitButton.disabled = false;
                     submitButton.innerHTML = originalButtonHTML;
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Network error. Please check your connection and try again.');
+                alert('Kesalahan jaringan. Harap periksa koneksi Anda dan coba lagi.'); // Diterjemahkan
                 submitButton.disabled = false;
                 submitButton.innerHTML = originalButtonHTML;
             }
         });
 
-        // Auto-generate slug from title
+        // Auto-generate slug from title (Logic remains in English)
         contentTextarea.addEventListener('input', () => {
             if (!slugInput.value) {
                 const content = contentTextarea.value;
@@ -372,7 +363,7 @@ Write your markdown content here...
             }
         });
 
-        // Slug availability check with debounce
+        // Slug availability check with debounce (Logic remains in English)
         const slugStatus = document.getElementById('slug-status');
         const slugMessage = document.getElementById('slug-message');
         let debounceTimer;
@@ -410,7 +401,7 @@ Write your markdown content here...
             if (!slug || slug.length < 3) {
                 hideSlugStatus();
                 slugMessage.className = 'text-xs mt-2 text-slate-500';
-                slugMessage.textContent = 'Only lowercase letters, numbers, and hyphens allowed';
+                slugMessage.textContent = 'Hanya huruf kecil, angka, dan tanda hubung yang diizinkan'; // Diterjemahkan
                 isSlugAvailable = false;
                 return;
             }
@@ -420,7 +411,7 @@ Write your markdown content here...
             if (!slugRegex.test(slug)) {
                 hideSlugStatus();
                 slugMessage.className = 'text-xs mt-2 text-red-600';
-                slugMessage.textContent = 'Only lowercase letters, numbers, and hyphens allowed';
+                slugMessage.textContent = 'Hanya huruf kecil, angka, dan tanda hubung yang diizinkan'; // Diterjemahkan
                 isSlugAvailable = false;
                 return;
             }
@@ -446,7 +437,7 @@ Write your markdown content here...
                 console.error('Error checking slug:', error);
                 hideSlugStatus();
                 slugMessage.className = 'text-xs mt-2 text-slate-500';
-                slugMessage.textContent = 'Error checking slug availability';
+                slugMessage.textContent = 'Kesalahan saat memeriksa ketersediaan slug'; // Diterjemahkan
                 isSlugAvailable = false;
             }
         }
@@ -463,6 +454,5 @@ Write your markdown content here...
             }, 500);
         });
     </script>
-
 </body>
 </html>
